@@ -1,0 +1,16 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define PI 2*acos(0.0)
+int main()
+{
+    int t,cs=0;
+    cin>>t;
+    while(t--)
+    {
+        double r;
+        cin>>r;
+        printf("Case %d: %.2lf\n",++cs,((2*r)*(2*r)-PI*r*r)+.000000001);
+
+    }
+    return 0;
+}
