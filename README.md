@@ -1,0 +1,2 @@
+# lightoj
+For practice
