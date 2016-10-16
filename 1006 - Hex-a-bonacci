@@ -1,0 +1,33 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+ll a,b,c,d,e,f;
+ll dp[100000];
+ll fib(ll n)
+{
+    if(n==0) return dp[n]=a%10000007;
+    if(n==1) return dp[n]=b%10000007;
+    if(n==2) return dp[n]=c%10000007;
+    if(n==3) return dp[n]=d%10000007;
+    if(n==4) return dp[n]=e%10000007;
+    if(n==5) return dp[n]=f%10000007;
+    if(dp[n]!=-1) return dp[n]%10000007;
+    return dp[n]=(fib(n-1)%10000007+fib(n-2)%10000007+fib(n-3)%10000007+fib(n-4)%10000007+fib(n-5)%10000007+fib(n-6)%10000007)%10000007;
+
+
+}
+int main()
+{
+    int t,cs=0;
+    cin>>t;;
+    while(t--)
+    {
+        memset(dp,-1,sizeof(dp));
+        int n;
+        cin>>a>>b>>c>>d>>e>>f>>n;
+        printf("Case %d: %lld\n",++cs,fib(n));
+
+    }
+    return 0;
+
+}
