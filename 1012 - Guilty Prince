@@ -1,0 +1,50 @@
+#include<bits/stdc++.h>
+using namespace std;
+int x[]={-1,1,0,0};
+int y[]={0,0,1,-1};
+char ch[50][50];
+int ans;
+int w,h;
+void bfs(int i,int j)
+{
+    ans++;
+    ch[i][j]='#';
+    for(int k=0;k<4;k++)
+    {
+        if(i+x[k]>=0&&i+x[k]<h&&j+y[k]>=0&&j+y[k]<w&&ch[i+x[k]][j+y[k]]=='.')
+        bfs(i+x[k],j+y[k]);
+    }
+}
+int main()
+{
+    int t,cs=0;
+    scanf("%d",&t);
+    while(t--)
+    {
+
+        ans=0;
+        scanf("%d%d",&w,&h);
+
+        for(int i=0;i<h;i++)
+        {
+            cin.ignore();
+            for(int j=0;j<w;j++)
+            {
+                scanf("%c",&ch[i][j]);
+            }
+        }
+        for(int i=0;i<h;i++)
+        {
+            for(int j=0;j<w;j++)
+            {
+                if(ch[i][j]=='@')
+                   {
+                      bfs(i,j);
+                      break;
+                   }
+            }
+        }
+        printf("Case %d: %d\n",++cs,ans);
+    }
+    return 0;
+}
