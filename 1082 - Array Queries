@@ -1,0 +1,126 @@
+
+/**********************************************************************\
+|           _______  _     _____    ____   ___     _                   |
+|          |___   _|(_)   / ___/   / _  | |   \   | |                  |
+|              | |  | |  / /___   / /_| | | |\ \  | |                  |
+|           _  | |  | | /___  /  /  __  | | | \ \ | |                  |
+|           \ \| |  | | ___/ /  / /   | | | |  \ \| |                  |
+|            \___/  |_|/____/  /_/    |_| |_|   \___|                  |
+|                  Computer Science and Engineering                    |
+|  Bangabandhu Sheikh Mujibur Rahman Science and Technology University |
+|         devskill:jisancse||uva:jishan047||github:jisan047            |
+\**********************************************************************/
+
+                /********************\
+                |                    |
+                |    lets try.....   |
+                |                    |
+                \********************/
+
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+#define sf scanf
+#define pf printf
+#define End return 0
+#define D double
+#define F float
+#define B break
+#define C continue
+#define pb push_back
+#define Pb pop_back
+#define pop __builtin_popcount
+#define gcd(a,b) __gcd(a,b)
+#define P pricision
+#define pii pair<int,int>
+#define pll pair<long,long>
+#define msi map<string,int>
+#define mis map<int,string>
+#define mss map<string,string>
+#define msb map<string,bool>
+#define loop(i,n) for(int i=0;i<n;i++)
+int Int(){int x;scanf("%d",&x);return x;}
+ll Long(){ll x;scanf("%lld",&x);return x;}
+D Double(){D x;scanf("%lf",&x);return x;}
+F Float(){F x;scanf("%f",&x);return x;}
+const int N=1e5+5;
+#define Int Int()
+#define Long Long()
+#define Double Double()
+#define Float Float()
+//Trying to do something.
+//()()()()()()()()() ..... ()()()()()()()()()()()()
+//~~~~~~~~~~~~~~~~~~~~~~Get Ready~~~~~~~~~~~~~~~~~~~~~
+
+///DSU
+/*void MakeSet(){
+    par[n]=n;
+}
+void Find(){
+    if(par[n]==n) return n;
+    return par[n]=Find(par[n]);
+}
+void Union(){
+    u=Find(n1);
+    v=Find(n2);
+
+}*/
+
+///BigMod
+/*int BigMod(int base,int power,int div){
+    int x;
+    if(power==0)return 1;
+    if(power&1) return (base%div*BigMod(base,power-1,div)%div)%div;
+    x=BigMod(base,power/2,div);
+    return (x%div*x%div)%div;
+
+
+}*/
+int tree[4*N];
+int arr[N];
+void init(int node,int b,int e){
+    if(e==b){
+        tree[node]=arr[b];
+        return;
+    }
+    int mid=(e+b)/2;
+    init(2*node,b,mid);
+    init((2*node)+1,mid+1,e);
+    tree[node]=min(tree[node*2],tree[(node*2)+1]);
+
+
+}
+
+int query(int node,int b,int e,int l,int r){
+    if(e<l||r<b)return INT_MAX;
+    if(l<=b&&e<=r)return tree[node];
+    int mid=(e+b)/2;
+    int x=query(node*2,b,mid,l,r);
+    int y=query(node*2+1,mid+1,e,l,r);
+    return min(x,y);
+}
+
+// loading..................
+
+int main()
+{
+    int t=Int,ts=0;
+    while(t--)
+    {
+        memset(tree,INT_MAX,sizeof(tree));
+        int n=Int;
+        int q=Int;
+
+        loop(i,n)sf("%d",&arr[i+1]);
+        //loop(i,n)cout<<arr[i+1]<<" "<<i+1<<endl;
+        init(1,1,n);
+        pf("Case %d:\n",++ts);
+        loop(i,q){
+            int l=Int;
+            int r=Int;
+            pf("%d\n",query(1,1,n,l,r));
+        }
+    }
+
+    End;
+}
