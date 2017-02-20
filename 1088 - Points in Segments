@@ -1,0 +1,126 @@
+/**********************************************************************\
+|           _______  _     _____    ____   ___     _                   |
+|          |___   _|(_)   / ___/   / _  | |   \   | |                  |
+|              | |  | |  / /___   / /_| | | |\ \  | |                  |
+|           _  | |  | | /___  /  /  __  | | | \ \ | |                  |
+|           \ \| |  | | ___/ /  / /   | | | |  \ \| |                  |
+|            \___/  |_|/____/  /_/    |_| |_|   \___|                  |
+|                  Computer Science and Engineering                    |
+|  Bangabandhu Sheikh Mujibur Rahman Science and Technology University |
+|         devskill:jisancse||uva:jishan047||github:jisan047            |
+\**********************************************************************/
+
+                /********************\
+                |                    |
+                |    lets try.....   |
+                |                    |
+                \********************/
+
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+#define sf scanf
+#define pf printf
+#define End return 0
+#define D double
+#define F float
+#define B break
+#define C continue
+#define pb push_back
+#define Pb pop_back
+#define pop __builtin_popcount
+#define gcd(a,b) __gcd(a,b)
+#define P pricision
+#define pii pair<int,int>
+#define pll pair<long,long>
+#define msi map<string,int>
+#define mis map<int,string>
+#define mss map<string,string>
+#define msb map<string,bool>
+#define loop(i,n) for(int i=0;i<n;i++)
+int Int(){int x;scanf("%d",&x);return x;}
+ll Long(){ll x;scanf("%lld",&x);return x;}
+D Double(){D x;scanf("%lf",&x);return x;}
+F Float(){F x;scanf("%f",&x);return x;}
+const int N=1e5+5;
+#define Int Int()
+#define Long Long()
+#define Double Double()
+#define Float Float()
+//Trying to do something.
+//()()()()()()()()() ..... ()()()()()()()()()()()()
+//~~~~~~~~~~~~~~~~~~~~~~Get Ready~~~~~~~~~~~~~~~~~~~~~
+
+///DSU
+/*void MakeSet(){
+    par[n]=n;
+}
+void Find(){
+    if(par[n]==n) return n;
+    return par[n]=Find(par[n]);
+}
+void Union(){
+    u=Find(n1);
+    v=Find(n2);
+
+}*/
+
+///BigMod
+/*int BigMod(int base,int power,int div){
+    int x;
+    if(power==0)return 1;
+    if(power&1) return (base%div*BigMod(base,power-1,div)%div)%div;
+    x=BigMod(base,power/2,div);
+    return (x%div*x%div)%div;
+
+
+}*/
+int arr[N];
+int n;
+
+int lowerbound(int x){
+    int low=0;
+    int high=n-1;
+    int mid;
+
+    while(low<=high){
+        mid=(low+high)>>1;
+        if(arr[mid]<x)low=mid+1;
+        else high=mid-1;
+    }
+    return low;
+}
+
+int upperbound(int y){
+    int low=0;
+    int high=n-1;
+    int mid;
+
+    while(low<=high){
+        mid=(low+high)>>1;
+        if(arr[mid]>y)high=mid-1;
+        else low=mid+1;
+    }
+    return low;
+}
+
+// loading..................
+
+
+int main()
+{
+    int t=Int,cs=0;
+    while(t--){
+        n=Int;
+        int q=Int;
+        loop(i,n)arr[i]=Int;
+        pf("Case %d:\n",++cs);
+        loop(i,q){
+            int x=Int,y=Int;
+            //cout<<upperbound(y)<<" "<<lowerbound(x)<<endl;
+            pf("%d\n",(upperbound(y)-lowerbound(x)));
+        }
+    }
+
+    End;
+}
