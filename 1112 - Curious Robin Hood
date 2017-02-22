@@ -1,0 +1,175 @@
+/**********************************************************************\
+|           _______  _     _____    ____   ___     _                   |
+|          |___   _|(_)   / ___/   / _  | |   \   | |                  |
+|              | |  | |  / /___   / /_| | | |\ \  | |                  |
+|           _  | |  | | /___  /  /  __  | | | \ \ | |                  |
+|           \ \| |  | | ___/ /  / /   | | | |  \ \| |                  |
+|            \___/  |_|/____/  /_/    |_| |_|   \___|                  |
+|                  Computer Science and Engineering                    |
+|  Bangabandhu Sheikh Mujibur Rahman Science and Technology University |
+|         devskill:jisancse||uva:jishan047||github:jisan047            |
+\**********************************************************************/
+
+                /********************\
+                |                    |
+                |    lets try.....   |
+                |                    |
+                \********************/
+
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+#define sf scanf
+#define pf printf
+#define End return 0
+#define D double
+#define F float
+#define B break
+#define C continue
+#define pb push_back
+#define Pb pop_back
+#define pop __builtin_popcount
+#define gcd(a,b) __gcd(a,b)
+#define P pricision
+#define pii pair<int,int>
+#define pll pair<long,long>
+#define msi map<string,int>
+#define mis map<int,string>
+#define mss map<string,string>
+#define msb map<string,bool>
+#define loop(i,n) for(int i=0;i<n;i++)
+int Int(){int x;scanf("%d",&x);return x;}
+ll Long(){ll x;scanf("%lld",&x);return x;}
+D Double(){D x;scanf("%lf",&x);return x;}
+F Float(){F x;scanf("%f",&x);return x;}
+const int N=1e5+5;
+#define Int Int()
+#define Long Long()
+#define Double Double()
+#define Float Float()
+//Trying to do something.
+//()()()()()()()()() ..... ()()()()()()()()()()()()
+//~~~~~~~~~~~~~~~~~~~~~~Get Ready~~~~~~~~~~~~~~~~~~~~~
+
+///DSU
+/*void MakeSet(){
+    par[n]=n;
+}
+void Find(){
+    if(par[n]==n) return n;
+    return par[n]=Find(par[n]);
+}
+void Union(){
+    u=Find(n1);
+    v=Find(n2);
+
+}*/
+
+///BigMod
+/*int BigMod(int base,int power,int div){
+    int x;
+    if(power==0)return 1;
+    if(power&1) return (base%div*BigMod(base,power-1,div)%div)%div;
+    x=BigMod(base,power/2,div);
+    return (x%div*x%div)%div;
+
+
+}*/
+int a[N];
+int tree[4*N];
+int r;
+void init(int node,int b,int e){
+    if(e==b){
+        tree[node]=a[b];
+        return;
+    }
+    int mid=(e+b)>>1;
+    int left=node*2;
+    int right=left+1;
+    init(left,b,mid);
+    init(right,mid+1,e);
+    tree[node]=tree[left]+tree[right];
+
+}
+void upd1(int node,int b,int e,int i){
+    if(e==i&&b==i){
+        r=tree[node];
+        tree[node]=0;
+        //cout<<"upd1"<<tree[node]<<endl;
+        return ;
+    }
+    if(i>e||i<b)return ;
+    int mid=(e+b)>>1;
+    int left=node*2;
+    int right=left+1;
+    upd1(left,b,mid,i);
+    upd1(right,mid+1,e,i);
+    tree[node]=tree[left]+tree[right];
+
+}
+
+void upd2(int node,int b,int e,int v,int i){
+    if(e==b&&b==i){
+
+        tree[node]=tree[node]+v;
+        //cout<<"upd2"<<tree[node]<<endl;
+        return ;
+    }
+    if(i>e||i<b)return ;
+    int mid=(e+b)>>1;
+    int left=node*2;
+    int right=left+1;
+    upd2(left,b,mid,v,i);
+    upd2(right,mid+1,e,v,i);
+    tree[node]=tree[left]+tree[right];
+
+}
+int query(int node,int b,int e,int i,int j){
+    if(i>e||j<b)return 0;
+    if(b>=i&&e<=j)return tree[node];
+    int mid=(e+b)>>1;
+    int left=node*2;
+    int right=left+1;
+    int x=query(left,b,mid,i,j);
+    int y=query(right,mid+1,e,i,j);
+    return x+y;
+}
+
+// loading..................
+
+int main()
+{
+    int t=Int,cs=0;
+    while(t--){
+        memset(a,0,sizeof a);
+        memset(tree,0,sizeof tree);
+        r=0;
+        int n=Int,q=Int;
+        for(int i=1;i<=n;i++)a[i]=Int;
+        init(1,1,n);
+        pf("Case %d:\n",++cs);
+        loop(i,q){
+            int c=Int;
+            if(c==1){
+                int i=Int+1;
+                upd1(1,1,n,i);
+                pf("%d\n",r);
+            }
+            else if(c==2){
+                int i=Int+1;
+                int v=Int;
+                upd2(1,1,n,v,i);
+            }
+            else
+            {
+                int i=Int+1;
+                int j=Int+1;
+                pf("%d\n",query(1,1,n,i,j));
+            }
+        }
+    }
+
+
+    End;
+}
+
