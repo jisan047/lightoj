@@ -1,0 +1,131 @@
+/**********************************************************************\
+|           _______  _     _____    ____   ___     _                   |
+|          |___   _|(_)   / ___/   / _  | |   \   | |                  |
+|              | |  | |  / /___   / /_| | | |\ \  | |                  |
+|           _  | |  | | /___  /  /  __  | | | \ \ | |                  |
+|           \ \| |  | | ___/ /  / /   | | | |  \ \| |                  |
+|            \___/  |_|/____/  /_/    |_| |_|   \___|                  |
+|                  Computer Science and Engineering                    |
+|  Bangabandhu Sheikh Mujibur Rahman Science and Technology University |
+|         devskill:jisancse||uva:jishan047||github:jisan047            |
+\**********************************************************************/
+ 
+                /********************\
+                |                    |
+                |    lets try.....   |
+                |                    |
+                \********************/
+ 
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+#define sf scanf
+#define pf printf
+#define End return 0
+#define D double
+#define F float
+#define B break
+#define C continue
+#define pb push_back
+#define Pb pop_back
+#define gcd(a,b) __gcd(a,b)
+#define P pricision
+#define pii pair<int,int>
+#define pll pair<long,long>
+#define msi map<string,int>
+#define mis map<int,string>
+#define mss map<string,string>
+#define msb map<string,bool>
+#define loop(i,n) for(int i=0;i<n;i++)
+int Int(){int x;scanf("%d",&x);return x;}
+ll Long(){ll x;scanf("%lld",&x);return x;}
+D Double(){D x;scanf("%lf",&x);return x;}
+F Float(){F x;scanf("%f",&x);return x;}
+const int N=1e5+5;
+#define Int Int()
+#define Long Long()
+#define Double Double()
+#define Float Float()
+#define endl "\n"
+//Trying to do something.
+//()()()()()()()()() ..... ()()()()()()()()()()()()
+//~~~~~~~~~~~~~~~~~~~~~~Get Ready~~~~~~~~~~~~~~~~~~~~~
+ 
+///DSU
+/*void MakeSet(){
+    par[n]=n;
+}
+void Find(){
+    if(par[n]==n) return n;
+    return par[n]=Find(par[n]);
+}
+void Union(){
+    u=Find(n1);
+    v=Find(n2);
+ 
+}*/
+ 
+///BigMod
+/*int BigMod(int base,int power,int div){
+    int x;
+    if(power==0)return 1;
+    if(power&1) return (base%div*BigMod(base,power-1,div)%div)%div;
+    x=BigMod(base,power/2,div);
+    return (x%div*x%div)%div;
+ 
+ 
+}*/
+int k=16;
+int table[17][N];
+int a[N];
+const int inf=INT_MAX;
+void build(int n){
+    for(int i=0;i<=k;i++)
+        for(int j=0;j<N;j++)table[i][j]=inf;
+    for(int i=0;i<n;i++){
+        table[0][i]=a[i];
+    }
+    for(int i=1;i<=k;i++){
+        for(int j=0;j<=(n-(1<<i));j++){
+            table[i][j]=min(table[i-1][j],table[i-1][j+(1<<(i-1))]);
+        }
+    }
+ 
+}
+int query(int l,int r){
+    int ans=inf;
+    for(int i=k;i>=0;i--){
+        if(l+(1<<i)-1<=r){
+            ans=min(ans,table[i][l]);
+            //cerr<<ans<<endl;
+            l+=(1<<i);
+        }
+ 
+    }
+    return ans;
+}
+ 
+// loading..................
+ 
+int main()
+{
+    int t=Int,cs=0;
+    while(t--){
+        //cout<<endl;
+        printf("Case %d:\n",++cs);
+        int n=Int,q=Int;
+        int L=log(n)+1;
+        for(int i=0;i<n;i++){
+            a[i]=Int;
+        }
+        build(n);
+        loop(i,q){
+            int x=Int,y=Int;
+            x--,y--;
+            cout<<query(x,y)<<endl;
+        }
+    }
+ 
+    End;
+}
+ 
