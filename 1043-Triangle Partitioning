@@ -1,0 +1,96 @@
+/**********************************************************************\
+|           _______  _     _____    ____   ___     _                   |
+|          |___   _|(_)   / ___/   / _  | |   \   | |                  |
+|              | |  | |  / /___   / /_| | | |\ \  | |                  |
+|           _  | |  | | /___  /  /  __  | | | \ \ | |                  |
+|           \ \| |  | | ___/ /  / /   | | | |  \ \| |                  |
+|            \___/  |_|/____/  /_/    |_| |_|   \___|                  |
+|                  Computer Science and Engineering                    |
+|  Bangabandhu Sheikh Mujibur Rahman Science and Technology University |
+|         devskill:jisancse||uva:jishan047||github:jisan047            |
+\**********************************************************************/
+
+                /********************\
+                |                    |
+                |    lets try.....   |
+                |                    |
+                \********************/
+
+#include<bits/stdc++.h>
+using namespace std;
+
+///pre-processing
+#define     gcd(a, b)       __gcd(a,b)
+#define     lcm(a, b)       (a * b) / gcd(a, b)
+#define     loop(i, n)      for(int i=0;i<n;i++)
+#define     all(x)          x.begin(),x.end()
+#define     mem(a, x)       memset(a,x,sizeof a)
+#define     endl            '\n'
+#define     ss              second
+#define     ff              first
+#define     TN              typename
+
+///input functions
+int Int(){int x;scanf("%d",&x);return x;}
+long long Long(){long long x;scanf("%lld",&x);return x;}
+double Double(){double x;scanf("%lf",&x);return x;}
+
+///input functions shorting
+#define Int Int()
+#define Long Long()
+#define Double Double()
+#define Float Float()
+
+///Constants
+const int N = 3 * (int) 1e5 + 5;
+const long long MOD = (int) 1e9 + 7;
+//Trying to do something.
+//()()()()()()()()() ..... ()()()()()()()()()()()()
+//~~~~~~~~~~~~~~~~~~~~~~Get Ready~~~~~~~~~~~~~~~~~~~~~
+
+///debugger
+
+///end
+
+// loading..................
+double calculatedRatio(double ab, double ac, double bc, double ad){
+
+    double ae, de, s1, s2, smallTriangle, leargeTriangle, traphezium;
+    ae = (ad * ac) / ab;
+    de = (ad * bc) / ab;
+    s1 = (ab + ac + bc) / 2.0;
+    s2 = (ad + ae + de) / 2.0;
+    leargeTriangle = sqrt(s1 * (s1 - ab) * (s1 - ac) * (s1 - bc));
+    smallTriangle = sqrt(s2 * (s2 - ad) * (s2 - ae) * (s2 - de));
+    traphezium = leargeTriangle - smallTriangle;
+    return smallTriangle / traphezium;
+
+}
+
+double binarySearch(double ab, double ac, double bc, double ratio){
+    double low = 0.0;
+    double high = ab;
+    double mid;
+    for(int i = 0; i < 200; i++){
+        mid = (low + high) / 2.0;
+        if(calculatedRatio(ab, ac, bc, mid) > ratio){
+            high = mid;
+        }
+        else low = mid;
+    }
+    return mid;
+}
+
+
+int main()
+{
+    //freopen("input.txt","r",stdin);
+    int t = Int, cs = 0;
+    while(t--){
+        double ab, ac, bc, ratio;
+        cin >> ab >> ac >> bc >> ratio;
+        printf("Case %d: %.10f\n", ++cs, binarySearch(ab, ac, bc, ratio));
+    }
+    
+    return 0;
+}
