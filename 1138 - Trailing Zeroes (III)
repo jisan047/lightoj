@@ -1,0 +1,107 @@
+/**********************************************************************\
+|           _______  _     _____    ____   ___     _                   |
+|          |___   _|(_)   / ___/   / _  | |   \   | |                  |
+|              | |  | |  / /___   / /_| | | |\ \  | |                  |
+|           _  | |  | | /___  /  /  __  | | | \ \ | |                  |
+|           \ \| |  | | ___/ /  / /   | | | |  \ \| |                  |
+|            \___/  |_|/____/  /_/    |_| |_|   \___|                  |
+|                  Computer Science and Engineering                    |
+|  Bangabandhu Sheikh Mujibur Rahman Science and Technology University |
+|         devskill:jisancse||uva:jishan047||github:jisan047            |
+\**********************************************************************/
+
+                /********************\
+                |                    |
+                |    lets try.....   |
+                |                    |
+                \********************/
+
+#include<bits/stdc++.h>
+using namespace std;
+
+///pre-processing
+#define     gcd(a, b)       __gcd(a,b)
+#define     lcm(a, b)       (a * b) / gcd(a, b)
+#define     loop(i, n)      for(int i=0;i<n;i++)
+#define     all(x)          x.begin(),x.end()
+#define     mem(a, x)       memset(a,x,sizeof a)
+#define     endl            '\n'
+#define     ss              second
+#define     ff              first
+#define     TN              typename
+
+///input functions
+int Int(){int x;scanf("%d",&x);return x;}
+long long Long(){long long x;scanf("%lld",&x);return x;}
+double Double(){double x;scanf("%lf",&x);return x;}
+
+///input functions shorting
+#define Int Int()
+#define Long Long()
+#define Double Double()
+#define Float Float()
+
+///Constants
+const int N = 3 * (int) 1e5 + 5;
+const long long MOD = (int) 1e9 + 7;
+//Trying to do something.
+//()()()()()()()()() ..... ()()()()()()()()()()()()
+//~~~~~~~~~~~~~~~~~~~~~~Get Ready~~~~~~~~~~~~~~~~~~~~~
+
+///debugger
+
+///end
+
+// loading..................
+
+long long zeros(long long n){
+    long long ret = 0LL;
+    //cout << n << endl;
+    while(n){
+        ret += n / 5LL;
+        n /= 5LL;
+    }
+    //cout << " " << ret << endl;
+    return ret;
+}
+long long dummy(long long q){
+    long long low = 1LL, high = 100000000000000000LL;
+    while(low <= high){
+        long long mid = (low + high) / 2LL; 
+        if(zeros(mid) == q){
+            return mid;
+        }
+        else if(zeros(mid) > q){
+            high = mid - 1LL;
+        }
+        else {
+            low = mid + 1LL; 
+        }
+    }
+    return -1LL;
+}
+long long optimal(long long high, long long q){
+    long long low = 1LL;
+    while(low <= high){
+        long long mid = (low + high) >> 1LL;
+        if(zeros(mid) < q)low = mid + 1LL;
+        else high = mid - 1LL;
+    }
+    return low;
+}
+int main()
+{
+    //freopen("input.txt","r",stdin);
+    int t = Int, cs = 0;
+    while(t--){
+        long long q = Long;
+        printf("Case %d: ", ++cs);
+        long long pos = dummy(q);
+        if(pos == -1){
+            puts("impossible");
+            continue;
+        }
+        printf("%lld\n", optimal(pos, q));
+    }
+    return 0;
+}
