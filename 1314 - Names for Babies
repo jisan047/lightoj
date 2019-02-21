@@ -1,0 +1,131 @@
+/**********************************************************************\
+|           _______  _     _____    ____   ___     _                   |
+|          |___   _|(_)   / ___/   / _  | |   \   | |                  |
+|              | |  | |  / /___   / /_| | | |\ \  | |                  |
+|           _  | |  | | /___  /  /  __  | | | \ \ | |                  |
+|           \ \| |  | | ___/ /  / /   | | | |  \ \| |                  |
+|            \___/  |_|/____/  /_/    |_| |_|   \___|                  |
+|                  Computer Science and Engineering                    |
+|  Bangabandhu Sheikh Mujibur Rahman Science and Technology University |
+|         devskill:jisancse||uva:jishan047||github:jisan047            |
+\**********************************************************************/
+
+                /********************\
+                |                    |
+                |    lets try.....   |
+                |                    |
+                \********************/
+
+#include<bits/stdc++.h>
+using namespace std;
+
+///pre-processing
+#define     gcd(a, b)       __gcd(a,b)
+#define     lcm(a, b)       (a * b) / gcd(a, b)
+#define     loop(i, n)      for(int i=0;i<n;i++)
+#define     all(x)          x.begin(),x.end()
+#define     mem(a, x)       memset(a,x,sizeof a)
+#define     endl            '\n'
+#define     ss              second
+#define     ff              first
+#define     TN              typename
+
+///input functions
+int Int(){int x;scanf("%d",&x);return x;}
+long long Long(){long long x;scanf("%lld",&x);return x;}
+double Double(){double x;scanf("%lf",&x);return x;}
+
+///input functions shorting
+#define Int Int()
+#define Long Long()
+#define Double Double()
+#define Float Float()
+
+///Constants
+const int N = (int) 1e5 + 5;
+const long long MOD = (int) 1e9 + 7;
+//Trying to do something.
+//()()()()()()()()() ..... ()()()()()()()()()()()()
+//~~~~~~~~~~~~~~~~~~~~~~Get Ready~~~~~~~~~~~~~~~~~~~~~
+
+// Usinf Suffix Array and LCP //
+
+///debugger
+
+///end
+
+// loading..................
+
+struct s_info{
+    int tup[2], index;
+    bool operator< (const s_info &a)const{
+        return (tup[0] == a.tup[0])? tup[1] < a.tup[1]: tup[0] < a.tup[0];
+    }
+} arr[N];
+int Rank[20][N], step, jump, len;
+int LCP[N];
+
+void suffixArray(string s){
+    len = s.size(), jump;
+    for(int i = 0; i < len; i++){
+        Rank[0][i] = s[i];
+        arr[i].tup[0] = arr[i].tup[1] = 0;
+    }
+    for(step = 1, jump = 1; jump <= len; step++, jump <<= 1){
+        for(int i = 0; i < len; i++){
+            arr[i].index = i;
+            arr[i].tup[0] = Rank[step - 1][i];
+            arr[i].tup[1] = i + jump < len ? Rank[step - 1][i + jump]: -1;
+        }
+        sort(arr, arr + len);
+        Rank[step][arr[0].index] = 0;
+        for(int i = 1; i < len; i++){
+            Rank[step][arr[i].index] = (arr[i].tup[0] == arr[i - 1].tup[0]
+                && arr[i].tup[1] == arr[i - 1].tup[1]) ? Rank[step][arr[i - 1].index]: i;
+        }
+    }
+    
+}
+
+void buildLCP(){
+    LCP[0] = 0;
+    int id1, id2;
+    for(int i = 1; i < len; i++){
+        id1 = arr[i - 1].index;
+        id2 = arr[i].index;
+        LCP[i] = 0;
+        for(int j = step - 1; j >= 0 && id1 < len && id2 < len; j--){
+            if((Rank[j][id1] == Rank[j][id2])){ 
+                LCP[i] += (1 << j);
+                id1 += (1 << j);
+                id2 += (1 << j);
+            }
+        }
+    }
+}
+
+int main()
+{
+    //freopen("input.txt","r",stdin);
+    string s;
+    int t = Int, cs = 0;
+    while(t--){
+        mem(arr, 0);
+        mem(Rank, 0);
+        mem(LCP, 0);
+        cin >> s;
+        //s += "$";
+        int p = Int, q = Int;
+        suffixArray(s);
+        buildLCP();
+        int ans = 0;
+        for(int i = 0; i < len; i++){
+            int k = min(q, len - arr[i].index) - max(p - 1, LCP[i]);
+            if(k > 0) ans += k;
+        }
+        printf("Case %d: %d\n", ++cs, ans);
+    }
+    
+
+    return 0;
+}
